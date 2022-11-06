@@ -5,6 +5,7 @@ const generateHTML = require('./generateHTML');
 const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
+let employees = [];
 
 // function to answer manager questions first and then choose whether to add another employee
 function managerQuestions() {
@@ -36,11 +37,13 @@ function managerQuestions() {
         },
     ]).then((answer) => {
         //create manager object every time questions are answered
-        const {managerName, managerID, managerEmail, officeName} = answer;
-        employees.push(new Manager(managerName, managerID, managerEmail, officeName))
+        const {managerName, managerID, managerEmail, officeNum} = answer;
+        employees.push(new Manager(managerName, managerID, managerEmail, officeNum))
         if (answer.enterEmployee === true) {
             chooseEmployeeType()
-        }    
+        } else {
+            writeToFile("index.html", generateHTML(employees))
+        }
     });
 }
 
@@ -97,7 +100,9 @@ function engineerQuestions() {
         employees.push(new Engineer(engineerName, engineerID, engineerEmail, github))
         if (answer.enterEmployee === true) {
             chooseEmployeeType()
-        }    
+        } else {
+            writeToFile("index.html", generateHTML(employees))
+        }
     });
 }
 
@@ -136,7 +141,9 @@ function internQuestions() {
         employees.push(new Intern(internName, internID, internEmail, school))
         if (answer.enterEmployee === true) {
             chooseEmployeeType()
-        }    
+        } else {
+            writeToFile("index.html", generateHTML(employees))
+        }
     });
 }
 
@@ -151,9 +158,9 @@ function writeToFile(fileName, data) {
 // Init function to start program
 
 function init() {
-    let employees = [];
-    managerQuestions();
-    writeToFile("index.html", generateHTML(employees));
+    
+    managerQuestions()
+    
 }
 
 init();
