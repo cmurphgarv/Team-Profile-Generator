@@ -1,15 +1,40 @@
 
-const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 
+
+// function to create cards based on employee object
+const cardTemplate = (employeeObject) => {
+    let roleInfo;
+    switch(employeeObject.getRole()) {
+        case 'Manager': 
+            roleInfo = employeeObject.officeNumber;
+            break;
+        case 'Engineer':
+            roleInfo = employeeObject.getGithub();
+            break;
+        case 'Intern':
+            roleInfo = employeeObject
+    }
+    return `<div class="card col-2 mx-2 mb-5 p-3">
+              <div class="card-header bg-info text-white">
+                  <h2>${employeeObject.getName()}</h2>
+                  <h3>${employeeObject.getRole()}</h3>
+              </div>
+              <div class="card-body bg-light">
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item">${employeeObject.getEmail()}</li>
+                      <li class="list-group-item">${employeeObject.getID()}</li>
+                      <li class="list-group-item">${roleInfo}</li>
+                    </ul>
+              </div>
+          </div>`
+}
+
 // function to handle generating the HTML file based on user input
-
-
-
-
-const generateHTML = ({  }) =>
+// pass in array of employee objects
+const generateHTML = (employees) =>
   `<!DOCTYPE html>
   <html lang="en">
   
@@ -25,19 +50,7 @@ const generateHTML = ({  }) =>
           <h1>My Team</h1>
       </div>
       <div class="row justify-content-center">
-          <div class="card col-2 mx-2 mb-5 p-3">
-              <div class="card-header bg-info text-white">
-                  <h1>Name</h1>
-                  <h2>Role</h2>
-              </div>
-              <div class="card-body bg-light">
-                  <ul class="list-group list-group-flush">
-                      <li class="list-group-item">email</li>
-                      <li class="list-group-item">id</li>
-                      <li class="list-group-item">github</li>
-                    </ul>
-              </div>
-          </div>
+          
   
       </div>
   </body>

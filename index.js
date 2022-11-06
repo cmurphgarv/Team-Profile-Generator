@@ -2,11 +2,11 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateHTML = require('./generateHTML');
-const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 const Engineer = require("./lib/engineer");
 
+// function to answer manager questions first and then choose whether to add another employee
 function managerQuestions() {
     return inquirer.prompt([
         {
@@ -35,6 +35,7 @@ function managerQuestions() {
             message: 'Do you want to add another employee?',
         },
     ]).then((answer) => {
+        //create manager object every time questions are answered
         const {managerName, managerID, managerEmail, officeName} = answer;
         employees.push(new Manager(managerName, managerID, managerEmail, officeName))
         if (answer.enterEmployee === true) {
@@ -43,6 +44,7 @@ function managerQuestions() {
     });
 }
 
+// manager must select employee type for correct questions to be generated
 function chooseEmployeeType() {
     return inquirer.prompt(
         {
@@ -60,6 +62,7 @@ function chooseEmployeeType() {
     })
 }
 
+// Engineer specific questions to create engineer objects
 function engineerQuestions() {
     return inquirer.prompt([
         {
@@ -89,12 +92,16 @@ function engineerQuestions() {
         },
 
     ]).then((answer) => {
+        //create engineer object every time questions are answered
+        const {engineerName, engineerID, engineerEmail, github} = answer;
+        employees.push(new Engineer(engineerName, engineerID, engineerEmail, github))
         if (answer.enterEmployee === true) {
             chooseEmployeeType()
         }    
     });
 }
 
+// Intern specific questions
 function internQuestions() {
     return inquirer.prompt([
         {
@@ -124,17 +131,24 @@ function internQuestions() {
         },
 
     ]).then((answer) => {
+        //create intern object every time questions are answered
+        const {internName, internID, internEmail, school} = answer;
+        employees.push(new Intern(internName, internID, internEmail, school))
         if (answer.enterEmployee === true) {
             chooseEmployeeType()
         }    
     });
 }
 
+// Function to write the file
+
 function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, (err) =>
         err ? console.log(err) : console.log('Successfully created HTML!')
     );
 }
+
+// Init function to start program
 
 function init() {
     let employees = [];
