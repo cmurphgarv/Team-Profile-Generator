@@ -1,7 +1,14 @@
-const inquirer = require('inquirer');
-const fs = require('fs');
+
+const Employee = require("./lib/employee");
+const Manager = require("./lib/manager");
+const Intern = require("./lib/intern");
+const Engineer = require("./lib/engineer");
 
 // function to handle generating the HTML file based on user input
+
+
+
+
 const generateHTML = ({  }) =>
   `<!DOCTYPE html>
   <html lang="en">
