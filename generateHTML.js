@@ -3,24 +3,28 @@
 const cardTemplate = (employeeObject) => {
     let roleInfoTitle;
     let roleInfo;
+    let employeeIconURL;
     switch(employeeObject.getRole()) {
         case 'Manager':
             roleInfoTitle = "Office Number: ";
             roleInfo = employeeObject.getOffice();
+            employeeIconURL = "./dist/tea-cup.png"
             break;
         case 'Engineer':
             roleInfoTitle = "Github: ";
             roleInfo = employeeObject.getGithub();
+            employeeIconURL = "./dist/eyeglass.png"
             break;
         case 'Intern':
             roleInfoTitle = "School: ";
             roleInfo = employeeObject.getSchool();
+            employeeIconURL = "./dist/graduation-cap.png"
             break;
     }
     return `<div class="card col-2 mx-2 mb-5 p-3">
               <div class="card-header bg-info text-white">
                   <h2>${employeeObject.getName()}</h2>
-                  <h3>${employeeObject.getRole()}</h3>
+                  <h3><img src="${employeeIconURL}">${employeeObject.getRole()}</h3>
               </div>
               <div class="card-body bg-light">
                   <ul class="list-group list-group-flush">
